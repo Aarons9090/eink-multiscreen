@@ -9,10 +9,9 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 import logging
-from waveshare_epd import epd4in2
+from lib.waveshare_epd import epd4in2
 import time
 from PIL import Image, ImageDraw, ImageFont
-import traceback
 
 def main():
 

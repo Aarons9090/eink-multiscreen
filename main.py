@@ -3,7 +3,7 @@
 import api.weatherdata as weather_api
 import sys
 import os
-picdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'pic')
+miscdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'misc')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
@@ -26,9 +26,9 @@ def main():
         epd.init()
         epd.Clear()
 
-        font24 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 24)
-        font18 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 18)
-        font35 = ImageFont.truetype(os.path.join(picdir, 'Font.ttc'), 35)
+        font24 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 24)
+        font18 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 18)
+        font35 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 35)
 
         Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
         draw = ImageDraw.Draw(Himage)

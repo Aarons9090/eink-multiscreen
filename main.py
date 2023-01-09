@@ -15,9 +15,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 def main():
 
-
     logging.basicConfig(level=logging.DEBUG)
-    print(miscdir)
+
     try:
         logging.info("epd4in2 Demo")
 
@@ -30,11 +29,11 @@ def main():
         font18 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 18)
         font35 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 35)
 
-        Himage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
-        draw = ImageDraw.Draw(Himage)
-        draw.text((10, 0), 'hello world', font=font24, fill=0)
-        epd.display(epd.getbuffer(Himage))
-        time.sleep(2)
+        Limage = Image.new('L', (epd.width, epd.height), "white")  # 255: clear the frame
+        draw = ImageDraw.Draw(Limage)
+        draw.text((10, 0), 'hello world', font=font24, fill="black")
+        epd.display_4Gray(epd.getbuffer_4Gray(Limage))
+        time.sleep(5)
 
         epd.Clear()
         logging.info("Goto Sleep...")

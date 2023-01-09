@@ -3,7 +3,7 @@
 import api.weatherdata as weather_api
 import sys
 import os
-miscdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'misc')
+miscdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'eink-multiscreen/misc')
 libdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'lib')
 if os.path.exists(libdir):
     sys.path.append(libdir)
@@ -17,7 +17,7 @@ def main():
 
 
     logging.basicConfig(level=logging.DEBUG)
-
+    print(miscdir)
     try:
         logging.info("epd4in2 Demo")
 

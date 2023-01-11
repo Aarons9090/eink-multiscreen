@@ -1,6 +1,7 @@
 # !/usr/bin/python
 # -*- coding:utf-8 -*-
 import api.weatherdata as weather_api
+import api.nordnetdata as nordnet
 import sys
 import os
 miscdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'eink-multiscreen/misc')
@@ -18,7 +19,11 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
 
     try:
-       	epd = epd4in2.EPD()
+
+        nordnet_data = nordnet.get_account_data()
+        print(nordnet_data)
+
+        epd = epd4in2.EPD()
         logging.info("init and Clear")
         epd.init()
         epd.Clear()

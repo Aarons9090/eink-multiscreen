@@ -1,5 +1,4 @@
 api/.env
-api/__pychache__
-*/__pycache__/
+**/__pycache__
 lib/
 *.save

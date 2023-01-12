@@ -19,10 +19,6 @@ def main():
     logging.basicConfig(level=logging.DEBUG)
 
     try:
-
-        nordnet_data = nordnet.get_account_data()
-        print(nordnet_data)
-
         epd = epd4in2.EPD()
         logging.info("init and Clear")
         epd.init()
@@ -38,25 +34,57 @@ def main():
         wind_icon = Image.open(os.path.join(miscdir, "windbmp.bmp"))
         drop_icon = Image.open(os.path.join(miscdir, "dropbmp.bmp"))
 
+        capital = "12345"
+        max_change = "+123"
+        today_change = "+12"
+
         while True:
             date = datetime.datetime.now()
             datestr = date.strftime("%H:%M %A %d.%m.%Y")
-            weatherdata = weather_api.get_weatherdata()
-            temp = str(weatherdata["temp"])
-            precipitation = str(weatherdata["precipitation"])
-            windspeed = str(weatherdata["windspeed"])
+            temp = "0"
+            precipitation = "0"
+            windspeed = "0"
 
+            try:
+                weatherdata = weather_api.get_weatherdata()
+                temp = str(weatherdata["temp"])
+                precipitation = str(weatherdata["precipitation"])
+                windspeed = str(weatherdata["windspeed"])
+            except Expestion as e:
+                print(e)
+            #every 15 minutes, get nordnet data
+            if int(date.strftime("%M")) % 5 == 0:
+                print("getting nordnet data")
+                nordnet_data = nordnet.get_account_data()
+                capital = nordnet_data["capital"]
+                max_change = nordnet_data["max_change"]
+                today_change = nordnet_data["today_change"]
+                print("nordnetdata:")
+                print(nordnet_data)
             Limage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
             draw = ImageDraw.Draw(Limage)
-
+            # top bar
             draw.rectangle((0,30,400,0), fill="black") 
             draw.text((10, 0), datestr, font=font24, fill="white")
+            # weather info
             Limage.paste(weather_test_icon, (7,41))
             draw.text((115,45), f"{temp}°C", font=font53, fill="black")
             Limage.paste(drop_icon, (282, 48))
             draw.text((312,47), f"{precipitation}%", font=font24, fill="black") 
             Limage.paste(wind_icon, (270, 82))
             draw.text((312,77), f"{windspeed}m/s", font=font24, fill="black")
+
+            # nordnet info
+            draw.rectangle((0,300,400,131), fill="black")
+            draw.text((286, 138), "Nordnet:", font=font24, fill="white")
+            draw.text((267, 171), "Total", font=font18, fill="white")
+            draw.text((271, 196), "Max", font=font18, fill="white")
+            draw.text((283, 221), "1D", font=font18, fill="white")
+
+            draw.text((321, 171), f"{capital}€", font=font18, fill="white")
+            draw.text((332, 196), f"{max_change}€", font=font18, fill="white")
+            draw.text((342, 221), f"{today_change}€", font=font18, fill="white")
+
             epd.display(epd.getbuffer(Limage))
             time.sleep(60)
 

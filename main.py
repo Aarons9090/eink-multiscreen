@@ -54,9 +54,10 @@ def main():
                 precipitation = str(weatherdata["precipitation"])
                 windspeed = str(weatherdata["windspeed"])
                 weathercode = weatherdata["weathercode"]
-            except Expestion as e:
+            except Exception as e:
                 print(e)
-            #every 15 minutes, get nordnet data
+
+            # every 15 minutes, get nordnet data
             if int(date.strftime("%M")) % 61 == 0:
                 print("getting nordnet data")
                 nordnet_data = nordnet.get_account_data()
@@ -65,13 +66,15 @@ def main():
                 today_change = nordnet_data["today_change"]
                 print("nordnetdata:")
                 print(nordnet_data)
+
             Limage = Image.new('1', (epd.width, epd.height), 255)  # 255: clear the frame
             draw = ImageDraw.Draw(Limage)
+
             # top bar
             draw.rectangle((0,30,400,0), fill="black") 
             draw.text((10, 0), datestr, font=font24, fill="white")
+
             # weather info
-            #Limage.paste(weather_test_icon, (7,41))
             draw.text((10, 41), weathericons.get_weathericon(weathercode), font=iconfont)
             draw.text((115,45), f"{temp}°C", font=font53, fill="black")
             Limage.paste(drop_icon, (282, 48))

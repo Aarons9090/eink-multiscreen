@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 import api.weatherdata as weather_api
 import api.nordnetdata as nordnet
+import api.weathericons as weathericons
 import sys
 import os
 miscdir = os.path.join(os.path.dirname(os.path.dirname(os.path.realpath(__file__))), 'eink-multiscreen/misc')
@@ -23,7 +24,7 @@ def main():
         logging.info("init and Clear")
         epd.init()
         epd.Clear()
-        print(os.path.join(miscdir, 'Font.ttc'))
+        iconfont = ImageFont.truetype(os.path.join(miscdir, 'meteocons.ttf'), 77)
         bold24 = ImageFont.truetype(os.path.join(miscdir, 'segoeuibold.ttf'), 24)
         font53 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 53)
         font24 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 24)
@@ -45,12 +46,14 @@ def main():
             temp = "0"
             precipitation = "0"
             windspeed = "0"
+            weathercode = 0
 
             try:
                 weatherdata = weather_api.get_weatherdata()
                 temp = str(weatherdata["temp"])
                 precipitation = str(weatherdata["precipitation"])
                 windspeed = str(weatherdata["windspeed"])
+                weathercode = weatherdata["weathercode"]
             except Expestion as e:
                 print(e)
             #every 15 minutes, get nordnet data
@@ -68,7 +71,8 @@ def main():
             draw.rectangle((0,30,400,0), fill="black") 
             draw.text((10, 0), datestr, font=font24, fill="white")
             # weather info
-            Limage.paste(weather_test_icon, (7,41))
+            #Limage.paste(weather_test_icon, (7,41))
+            draw.text((10, 41), weathericons.get_weathericon(weathercode), font=iconfont)
             draw.text((115,45), f"{temp}°C", font=font53, fill="black")
             Limage.paste(drop_icon, (282, 48))
             draw.text((312,47), f"{precipitation}%", font=font24, fill="black") 

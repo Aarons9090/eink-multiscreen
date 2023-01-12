@@ -1,1 +1,3 @@
 api/.env
+api/__pychache__
+*.save

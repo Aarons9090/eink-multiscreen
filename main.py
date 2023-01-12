@@ -17,6 +17,12 @@ if os.path.exists(libdir):
     sys.path.append(libdir)
 
 
+def is_stockmarket_open(hour):
+    if 9 <= hour <= 21:
+        return True
+    return False
+
+
 def main():
     logging.basicConfig(level=logging.DEBUG)
 
@@ -63,8 +69,8 @@ def main():
             except Exception as e:
                 print("Failed getting weather data: ", e)
 
-            # every 15 minutes, get nordnet data
-            if int(date.strftime("%M")) % 61 == 0:
+            # get nordnet data only when the stock exchange is open and only once an hour
+            if int(date.strftime("%M")) == 0 and is_stockmarket_open(int(date.strftime("%H"))):
                 print("getting nordnet data")
                 nordnet_data = nordnet.get_account_data()
                 capital = nordnet_data["capital"]

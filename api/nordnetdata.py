@@ -7,9 +7,15 @@ import time
 
 
 def get_account_data():
-    CONFIG = dotenv_values("api/.env")
-    username = CONFIG["username"]
-    password = CONFIG["password"]
+    """
+    Webscrape selenium method for getting data from a Nordnet account
+    The nordnet API is (for some reason) only working in Sweden so this is the only way
+    Messy? Absolutely. Convenient? No. Working? Somehow yes.
+    :return: return dict with keys: capital, today_change_euros, max_change_euros
+    """
+    config = dotenv_values("api/.env")
+    username = config["username"]
+    password = config["password"]
 
     display = Display(visible=0, size=(1600,1200))
     display.start()

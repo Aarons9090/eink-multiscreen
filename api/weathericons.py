@@ -1,5 +1,3 @@
-
-
 def get_weathericon(code):
     """
     Method for converting WMO Weather code to letter in the meteoicons font

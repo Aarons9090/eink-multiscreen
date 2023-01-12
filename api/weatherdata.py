@@ -1,10 +1,10 @@
 import requests
+URL = "https://api.open-meteo.com/v1/forecast?latitude=62.24&longitude=25.72&hourly=temperature_2m,weathercode,apparent_temperature,precipitation,cloudcover,windspeed_10m&windspeed_unit=ms&current_weather=true"
 
 
 def get_weatherdata():
-    url = "https://api.open-meteo.com/v1/forecast?latitude=62.24&longitude=25.72&hourly=temperature_2m,weathercode,apparent_temperature,precipitation,cloudcover,windspeed_10m&windspeed_unit=ms&current_weather=true"
 
-    resp = requests.get(url)
+    resp = requests.get(URL)
 
     data = resp.json()
     hourly_data = data["hourly"]
@@ -26,6 +26,3 @@ def get_weatherdata():
         "windspeed": windspeed,
         "weathercode": weathercode
     }
-
-
-

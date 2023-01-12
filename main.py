@@ -26,6 +26,7 @@ def main():
         epd.Clear()
         iconfont = ImageFont.truetype(os.path.join(miscdir, 'meteocons.ttf'), 77)
         bold24 = ImageFont.truetype(os.path.join(miscdir, 'segoeuibold.ttf'), 24)
+        bold21 = ImageFont.truetype(os.path.join(miscdir, 'segoeuibold.ttf'), 21)
         font53 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 53)
         font24 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 24)
         font18 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 18)
@@ -42,7 +43,9 @@ def main():
 
         while True:
             date = datetime.datetime.now()
-            datestr = date.strftime("%H:%M %A %d.%m.%Y")
+            timestr = date.strftime("%H:%M")
+            day_of_week = date.strftime("%A")
+            datestr = date.strftime("%d.%m.%Y")
             temp = "0"
             precipitation = "0"
             windspeed = "0"
@@ -72,14 +75,16 @@ def main():
 
             # top bar
             draw.rectangle((0,30,400,0), fill="black") 
-            draw.text((10, 0), datestr, font=font24, fill="white")
+            draw.text((10, 0), timestr, font=font24, fill="white")
+            draw.text((80, -3), day_of_week, font=bold24, fill="white")
+            draw.text((195, 0), datestr, font=font24, fill="white")
 
             # weather info
             draw.text((10, 41), weathericons.get_weathericon(weathercode), font=iconfont)
             draw.text((115,45), f"{temp}°C", font=font53, fill="black")
-            Limage.paste(drop_icon, (282, 48))
+            Limage.paste(drop_icon, (272, 48))
             draw.text((312,47), f"{precipitation}%", font=font24, fill="black") 
-            Limage.paste(wind_icon, (270, 82))
+            Limage.paste(wind_icon, (260, 82))
             draw.text((312,77), f"{windspeed}m/s", font=font24, fill="black")
 
             # nordnet info

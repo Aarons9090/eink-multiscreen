@@ -2,7 +2,7 @@ import requests
 
 
 def get_weatherdata():
-    url = "https://api.open-meteo.com/v1/forecast?latitude=62.24&longitude=25.72&hourly=temperature_2m,apparent_temperature,precipitation,cloudcover,windspeed_10m&current_weather=true"
+    url = "https://api.open-meteo.com/v1/forecast?latitude=62.24&longitude=25.72&hourly=temperature_2m,apparent_temperature,precipitation,cloudcover,windspeed_10m&windspeed_unit=ms&current_weather=true"
 
     resp = requests.get(url)
 

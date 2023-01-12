@@ -24,17 +24,18 @@ def main():
         epd.init()
         epd.Clear()
         print(os.path.join(miscdir, 'Font.ttc'))
-
+        bold24 = ImageFont.truetype(os.path.join(miscdir, 'segoeuibold.ttf'), 24)
         font53 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 53)
         font24 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 24)
         font18 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 18)
+        font21 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 21)
         font35 = ImageFont.truetype(os.path.join(miscdir, 'Font.ttc'), 35)
 
         weather_test_icon = Image.open(os.path.join(miscdir, "weathertestbpm.bmp"))
         wind_icon = Image.open(os.path.join(miscdir, "windbmp.bmp"))
         drop_icon = Image.open(os.path.join(miscdir, "dropbmp.bmp"))
 
-        capital = "12345"
+        capital = "12 345"
         max_change = "+123"
         today_change = "+12"
 
@@ -53,7 +54,7 @@ def main():
             except Expestion as e:
                 print(e)
             #every 15 minutes, get nordnet data
-            if int(date.strftime("%M")) % 5 == 0:
+            if int(date.strftime("%M")) % 61 == 0:
                 print("getting nordnet data")
                 nordnet_data = nordnet.get_account_data()
                 capital = nordnet_data["capital"]
@@ -76,14 +77,14 @@ def main():
 
             # nordnet info
             draw.rectangle((0,300,400,131), fill="black")
-            draw.text((286, 138), "Nordnet:", font=font24, fill="white")
-            draw.text((267, 171), "Total", font=font18, fill="white")
-            draw.text((271, 196), "Max", font=font18, fill="white")
-            draw.text((283, 221), "1D", font=font18, fill="white")
+            draw.text((259, 135), "Nordnet:", font=bold24, fill="white")
+            draw.text((259, 166), "Total", font=font21, fill="white")
+            draw.text((263, 192), "Max", font=font21, fill="white")
+            draw.text((276, 217), "1D", font=font21, fill="white")
 
-            draw.text((321, 171), f"{capital}€", font=font18, fill="white")
-            draw.text((332, 196), f"{max_change}€", font=font18, fill="white")
-            draw.text((342, 221), f"{today_change}€", font=font18, fill="white")
+            draw.text((321, 167), f"{capital}€", font=font21, fill="white")
+            draw.text((336, 192), f"{max_change}€", font=font21, fill="white")
+            draw.text((347, 217), f"{today_change}€", font=font21, fill="white")
 
             epd.display(epd.getbuffer(Limage))
             time.sleep(60)
